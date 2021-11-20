@@ -1,0 +1,36 @@
+{
+  "name": "buyme-lib-common-utils",
+  "version": "0.0.1",
+  "description": "Common utilities shared between Buyme's services",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev:watch": "babel --watch --extensions .ts ./src -d lib",
+    "build": "babel --extensions .ts ./src -d lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buymetech/buyme-lib-common-utils.git"
+  },
+  "author": "Ariel Morry",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/buymetech/buyme-lib-common-utils/issues"
+  },
+  "homepage": "https://github.com/buymetech/buyme-lib-common-utils#readme",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.15.0",
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-typescript": "^7.16.0",
+    "@types/node": "^16.11.9",
+    "eslint": "^8.2.0"
+  }
+}
