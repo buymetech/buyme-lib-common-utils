@@ -1,22 +1,29 @@
-import {config} from "../env";
-import {ApiError, ApiResponse, Client} from "@elastic/elasticsearch";
-import {TransportRequestCallback} from "@elastic/elasticsearch/lib/Transport";
+import {config} from "../env.js";
+import {ApiResponse, Client} from "@elastic/elasticsearch";
+import {TransportRequestPromise} from "@elastic/elasticsearch/lib/Transport";
 
-export default class Logger {
+export class Logger {
     readonly client: Client;
 
     constructor() {
         this.client = new Client({
-            node: config.elastic.endpoint,
+            cloud: {
+                id: config.elastic.cloud_id,
+            },
             auth: {
-                apiKey: config.elastic.apikey
+                username: config.elastic.username,
+                password: config.elastic.password
             }
-        })
+        });
     }
 
-    ping(): TransportRequestCallback {
-        return this.client.ping({}, {}, (err: ApiError, result: ApiResponse) => {
-            console.log(err ?? result);
-        });
+    run(): TransportRequestPromise<ApiResponse> {
+        return this.client.index({
+            index: 'test-index',
+            refresh: true,
+            body: {
+                service: config.elastic.service,
+            }
+        })
     }
 }
