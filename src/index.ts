@@ -1,8 +1,8 @@
-import {Logger} from "./logger/logger.module.js";
+import * as winstonHelper from 'winston';
+import LoggerModule from './logger/logger.module.js';
 
-const log = new Logger();
-
-log.run()
-    .then(response => {
-        console.log(response);
-    }).catch(console.log);
+export default class Utils {
+    static logger(opt?: winstonHelper.LoggerOptions) {
+        return new LoggerModule(opt).logger;
+    }
+}
