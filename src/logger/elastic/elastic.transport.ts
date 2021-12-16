@@ -1,6 +1,6 @@
 import Transport, * as transportHelper from 'winston-transport';
 import ecsFormat from '@elastic/ecs-winston-format';
-import ElasticClient from './elastic.client.js';
+import ElasticClient from './elastic.client';
 
 export class ElasticTransport extends Transport {
     private opts: transportHelper.TransportStreamOptions | undefined;

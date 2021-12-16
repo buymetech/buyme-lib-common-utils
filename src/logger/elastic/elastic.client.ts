@@ -1,4 +1,4 @@
-import {config} from '../../config.js';
+import {config} from '../../config';
 import {ApiResponse, Client} from '@elastic/elasticsearch';
 import {TransportRequestPromise} from '@elastic/elasticsearch/lib/Transport';
 
@@ -19,7 +19,6 @@ export default class ElasticClient {
 
     send(info: Object): TransportRequestPromise<ApiResponse> {
         const dt = new Date();
-
         return this.client.index({
             index: config.elastic.index!,
             refresh: true,
