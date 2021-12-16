@@ -1,6 +1,6 @@
-import {config} from '../config.js';
+import {config} from '../config';
 import winston, * as winstonHelper from 'winston';
-import {ElasticTransport} from './elastic/elastic.transport.js';
+import {ElasticTransport} from './elastic/elastic.transport';
 
 export default class LoggerModule {
     logger: winston.Logger;
