@@ -1,18 +1,23 @@
-import { config } from '../config.js';
-import winston from 'winston';
-import { ElasticTransport } from './elastic/elastic.transport.js';
-export default class LoggerModule {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const config_js_1 = require("../config.js");
+const winston_1 = __importDefault(require("winston"));
+const elastic_transport_js_1 = require("./elastic/elastic.transport.js");
+class LoggerModule {
     constructor(opt) {
-        this.logger = winston.createLogger(Object.assign({}, {
-            defaultMeta: { service: config.service },
-            format: winston.format.json(),
-            transports: [new ElasticTransport()],
+        this.logger = winston_1.default.createLogger(Object.assign({}, {
+            defaultMeta: { service: config_js_1.config.service },
+            format: winston_1.default.format.json(),
+            transports: [new elastic_transport_js_1.ElasticTransport()],
         }, opt));
-        if (config.env !== 'production') {
-            this.logger.add(new winston.transports.Console({
-                format: winston.format.prettyPrint(),
+        if (config_js_1.config.env !== 'production') {
+            this.logger.add(new winston_1.default.transports.Console({
+                format: winston_1.default.format.prettyPrint(),
             }));
         }
     }
 }
-//# sourceMappingURL=logger.module.js.map
+exports.default = LoggerModule;

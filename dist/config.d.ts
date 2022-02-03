@@ -1,11 +1,11 @@
 export declare const config: {
-    env: string;
-    service: string;
-    log_level: string;
+    env: string | undefined;
+    service: string | undefined;
+    log_level: string | undefined;
     elastic: {
-        username: string;
-        password: string;
-        cloud_id: string;
-        index: string;
+        username: string | undefined;
+        password: string | undefined;
+        cloud_id: string | undefined;
+        index: string | undefined;
     };
 };

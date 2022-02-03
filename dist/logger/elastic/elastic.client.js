@@ -1,15 +1,17 @@
-import { config } from '../../config.js';
-import { Client } from '@elastic/elasticsearch';
-export default class ElasticClient {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const config_js_1 = require("../../config.js");
+const elasticsearch_1 = require("@elastic/elasticsearch");
+class ElasticClient {
     constructor() {
         var _a, _b, _c;
-        this.client = new Client({
+        this.client = new elasticsearch_1.Client({
             cloud: {
-                id: (_a = config.elastic.cloud_id) !== null && _a !== void 0 ? _a : '',
+                id: (_a = config_js_1.config.elastic.cloud_id) !== null && _a !== void 0 ? _a : '',
             },
             auth: {
-                username: (_b = config.elastic.username) !== null && _b !== void 0 ? _b : '',
-                password: (_c = config.elastic.password) !== null && _c !== void 0 ? _c : '',
+                username: (_b = config_js_1.config.elastic.username) !== null && _b !== void 0 ? _b : '',
+                password: (_c = config_js_1.config.elastic.password) !== null && _c !== void 0 ? _c : '',
             },
         });
     }
@@ -17,10 +19,10 @@ export default class ElasticClient {
         var _a;
         const dt = new Date();
         return this.client.index({
-            index: (_a = config.elastic.index) !== null && _a !== void 0 ? _a : '',
+            index: (_a = config_js_1.config.elastic.index) !== null && _a !== void 0 ? _a : '',
             refresh: true,
-            body: Object.assign({ '@timestamp': dt.toISOString(), service: config.service }, info),
+            body: Object.assign({ '@timestamp': dt.toISOString(), service: config_js_1.config.service }, info),
         });
     }
 }
-//# sourceMappingURL=elastic.client.js.map
+exports.default = ElasticClient;
