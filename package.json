@@ -1,6 +1,6 @@
 {
   "name": "buyme-lib-common-utils",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Common utilities shared between Buyme's services",
   "main": "dist/index.js",
   "license": "UNLICENSED",
