@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "description": "Common utilities shared between Buyme's services",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "UNLICENSED",
   "type": "module",
   "author": "BUYME Technologies LTD",
