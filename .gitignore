@@ -22,10 +22,6 @@ yarn-error.log
 .env
 .env.test
 
-
-# babel
-lib
-
 # example
 /quick-start
 /example_dist

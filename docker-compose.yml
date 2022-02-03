@@ -6,6 +6,7 @@ services:
     restart: always
     working_dir: /usr/src/app
     stdin_open: true
+    user: node
     tty: true
     volumes:
       - ./:/usr/src/app
