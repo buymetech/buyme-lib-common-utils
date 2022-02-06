@@ -34,3 +34,6 @@ yarn-error.log
 /.nyc_output
 /packages/graphql
 build/config\.gypi
+
+# misc
+demo.js
