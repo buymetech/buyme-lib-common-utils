@@ -33,6 +33,9 @@ Utils.logger().info({
   message: 'Hello World',
   any_other_property: 'goes here',
 });
+
+// OR 
+Utils.logger().info('Hello World');
 ```
 
 #### ES6/TYPESCRIPT
@@ -48,3 +51,7 @@ Utils.logger().info({
 
 > Utils.logger() exposes Winston logger in it's core.<br>
 > Any functionality available in Winston Logger, should be available after calling this function.
+
+#### Logging Levels:<br>
+
+https://github.com/winstonjs/winston#logging-levels
