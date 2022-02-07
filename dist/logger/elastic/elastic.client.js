@@ -21,7 +21,7 @@ class ElasticClient {
         return this.client.index({
             index: (_a = config_js_1.config.elastic.index) !== null && _a !== void 0 ? _a : '',
             refresh: true,
-            body: Object.assign({ '@timestamp': dt.toISOString(), service: config_js_1.config.service }, info),
+            body: Object.assign({ '@timestamp': dt.toISOString(), service: config_js_1.config.service_name }, info),
         });
     }
 }

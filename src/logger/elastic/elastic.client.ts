@@ -24,7 +24,7 @@ export default class ElasticClient {
       refresh: true,
       body: {
         '@timestamp': dt.toISOString(),
-        service: config.service,
+        service: config.service_name,
         ...info,
       },
     });

@@ -4,7 +4,7 @@ dotenv.config();
 
 export const config = {
   env: process.env.NODE_ENV,
-  service: process.env.SERVICE,
+  service_name: process.env.SERVICE_NAME,
   log_level: process.env.LOGGING_LEVEL,
   elastic: {
     username: process.env.ES_USERNAME,

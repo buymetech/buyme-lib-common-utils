@@ -1,6 +1,6 @@
 export declare const config: {
     env: string | undefined;
-    service: string | undefined;
+    service_name: string | undefined;
     log_level: string | undefined;
     elastic: {
         username: string | undefined;

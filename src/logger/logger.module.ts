@@ -10,7 +10,7 @@ export default class LoggerModule {
       Object.assign(
         {},
         {
-          defaultMeta: { service: config.service },
+          defaultMeta: { service: config.service_name },
           format: winston.format.json(),
           transports: [new ElasticTransport()],
         },

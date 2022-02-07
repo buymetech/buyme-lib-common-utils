@@ -9,7 +9,7 @@ const elastic_transport_js_1 = require("./elastic/elastic.transport.js");
 class LoggerModule {
     constructor(opt) {
         this.logger = winston_1.default.createLogger(Object.assign({}, {
-            defaultMeta: { service: config_js_1.config.service },
+            defaultMeta: { service: config_js_1.config.service_name },
             format: winston_1.default.format.json(),
             transports: [new elastic_transport_js_1.ElasticTransport()],
         }, opt));
