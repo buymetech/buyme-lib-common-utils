@@ -17,13 +17,5 @@ export default class LoggerModule {
         opt,
       ),
     );
-
-    if (config.env !== 'production') {
-      this.logger.add(
-        new winston.transports.Console({
-          format: winston.format.prettyPrint(),
-        }),
-      );
-    }
   }
 }

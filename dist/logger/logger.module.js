@@ -13,11 +13,6 @@ class LoggerModule {
             format: winston_1.default.format.json(),
             transports: [new elastic_transport_js_1.ElasticTransport()],
         }, opt));
-        if (config_js_1.config.env !== 'production') {
-            this.logger.add(new winston_1.default.transports.Console({
-                format: winston_1.default.format.prettyPrint(),
-            }));
-        }
     }
 }
 exports.default = LoggerModule;
