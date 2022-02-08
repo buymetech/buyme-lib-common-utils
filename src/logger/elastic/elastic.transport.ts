@@ -17,8 +17,12 @@ export class ElasticTransport extends Transport {
       this.emit('logged', info);
     });
 
-    const client = new ElasticClient();
-    client.send(info);
+    try {
+      const client = new ElasticClient();
+      client.send(info);
+    } catch (error) {
+      console.error('Error while sending log to ES', error);
+    }
 
     callback();
   }
