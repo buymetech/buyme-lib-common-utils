@@ -17,8 +17,13 @@ class ElasticTransport extends winston_transport_1.default {
         setImmediate(() => {
             this.emit('logged', info);
         });
-        const client = new elastic_client_js_1.default();
-        client.send(info);
+        try {
+            const client = new elastic_client_js_1.default();
+            client.send(info);
+        }
+        catch (error) {
+            console.error('Error while sending log to ES', error);
+        }
         callback();
     }
 }
