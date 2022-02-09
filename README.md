@@ -54,4 +54,4 @@ Utils.logger().info({
 
 #### Logging Levels:<br>
 
-https://github.com/winstonjs/winston#logging-levels
+https://github.com/winstonjs/winston#using-logging-levels
