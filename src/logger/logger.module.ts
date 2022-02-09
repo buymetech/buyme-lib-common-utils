@@ -18,12 +18,10 @@ export default class LoggerModule {
       ),
     );
 
-    if (config.env !== 'production') {
-      this.logger.add(
-        new winston.transports.Console({
-          format: winston.format.prettyPrint(),
-        }),
-      );
-    }
+    this.logger.add(
+      new winston.transports.Console({
+        format: winston.format.prettyPrint(),
+      }),
+    );
   }
 }
