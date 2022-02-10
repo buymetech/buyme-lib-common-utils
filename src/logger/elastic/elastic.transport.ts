@@ -13,12 +13,12 @@ export class ElasticTransport extends Transport {
     this.opts.format = ecsFormat();
   }
 
-  log(info: any, callback: () => void) {
+  log(data: any, callback: () => void) {
     setImmediate(() => {
-      this.emit('logged', info);
+      this.emit('logged', data);
     });
 
-    const logObject = this.getLogObject(info);
+    const logObject = this.getLogObject(data);
     const client = new ElasticClient();
 
     client.send(logObject).catch((error) => {
@@ -28,19 +28,25 @@ export class ElasticTransport extends Transport {
     callback();
   }
 
-  getLogObject(info: unknown) {
-    const result = {
-      content: '',
-    };
+  getLogObject(data: any) {
+    const result = {};
 
     if (
-      info instanceof String ||
-      typeof info === 'string' ||
-      typeof info === 'number'
+      data instanceof String ||
+      typeof data === 'string' ||
+      typeof data === 'number'
     ) {
-      result.content = JSON.stringify(info);
-    } else if (typeof info === 'object' && info !== null) {
-      Object.assign(result, CommonHelper.flatten(info));
+      Object.assign(result, { content: JSON.stringify(data) });
+    } else if (typeof data === 'object' && data !== null) {
+      if (
+        data.hasOwnProperty('message') &&
+        data.message.hasOwnProperty('es_index')
+      ) {
+        Object.assign(result, { es_index: data.message.es_index });
+        delete data.message.es_index;
+      }
+
+      Object.assign(result, CommonHelper.flatten(data));
     }
 
     return result;

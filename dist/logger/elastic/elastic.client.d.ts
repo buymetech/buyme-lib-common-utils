@@ -6,6 +6,6 @@ interface EsObject {
 export default class ElasticClient {
     private readonly client;
     constructor();
-    send(data: EsObject, idx?: string): TransportRequestPromise<ApiResponse>;
+    send(logObject: EsObject, idx?: string): TransportRequestPromise<ApiResponse>;
 }
 export {};

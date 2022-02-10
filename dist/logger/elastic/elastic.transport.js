@@ -14,28 +14,31 @@ class ElasticTransport extends winston_transport_1.default {
         this.opts = opts || {};
         this.opts.format = (0, ecs_winston_format_1.default)();
     }
-    log(info, callback) {
+    log(data, callback) {
         setImmediate(() => {
-            this.emit('logged', info);
+            this.emit('logged', data);
         });
-        const logObject = this.getLogObject(info);
+        const logObject = this.getLogObject(data);
         const client = new elastic_client_js_1.default();
         client.send(logObject).catch((error) => {
             console.error('Error while sending log to ES', error);
         });
         callback();
     }
-    getLogObject(info) {
-        const result = {
-            content: '',
-        };
-        if (info instanceof String ||
-            typeof info === 'string' ||
-            typeof info === 'number') {
-            result.content = JSON.stringify(info);
+    getLogObject(data) {
+        const result = {};
+        if (data instanceof String ||
+            typeof data === 'string' ||
+            typeof data === 'number') {
+            Object.assign(result, { content: JSON.stringify(data) });
         }
-        else if (typeof info === 'object' && info !== null) {
-            Object.assign(result, common_helper_1.CommonHelper.flatten(info));
+        else if (typeof data === 'object' && data !== null) {
+            if (data.hasOwnProperty('message') &&
+                data.message.hasOwnProperty('es_index')) {
+                Object.assign(result, { es_index: data.message.es_index });
+                delete data.message.es_index;
+            }
+            Object.assign(result, common_helper_1.CommonHelper.flatten(data));
         }
         return result;
     }

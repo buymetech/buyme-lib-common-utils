@@ -22,18 +22,18 @@ export default class ElasticClient {
   }
 
   send(
-    data: EsObject,
+    logObject: EsObject,
     idx = config.elastic.index,
   ): TransportRequestPromise<ApiResponse> {
     const dt = new Date();
 
     return this.client.index({
-      index: 'es_index' in data ? data.es_index : idx,
+      index: 'es_index' in logObject ? logObject.es_index : idx,
       refresh: true,
       body: {
         '@timestamp': dt.toISOString(),
         service: config.service_name,
-        ...data,
+        ...logObject,
       },
     });
   }
