@@ -22,6 +22,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = void 0;
 const dotenv = __importStar(require("dotenv"));
@@ -34,6 +35,6 @@ exports.config = {
         username: process.env.ES_USERNAME,
         password: process.env.ES_PASSWORD,
         cloud_id: process.env.ES_CLOUD_ID,
-        index: process.env.ES_INDEX,
+        index: (_a = process.env.ES_INDEX) !== null && _a !== void 0 ? _a : '',
     },
 };

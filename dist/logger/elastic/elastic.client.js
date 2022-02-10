@@ -15,13 +15,12 @@ class ElasticClient {
             },
         });
     }
-    send(info) {
-        var _a;
+    send(data, idx = config_js_1.config.elastic.index) {
         const dt = new Date();
         return this.client.index({
-            index: (_a = config_js_1.config.elastic.index) !== null && _a !== void 0 ? _a : '',
+            index: 'es_index' in data ? data.es_index : idx,
             refresh: true,
-            body: Object.assign({ '@timestamp': dt.toISOString(), service: config_js_1.config.service_name }, info),
+            body: Object.assign({ '@timestamp': dt.toISOString(), service: config_js_1.config.service_name }, data),
         });
     }
 }

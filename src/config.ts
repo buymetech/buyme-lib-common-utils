@@ -10,6 +10,6 @@ export const config = {
     username: process.env.ES_USERNAME,
     password: process.env.ES_PASSWORD,
     cloud_id: process.env.ES_CLOUD_ID,
-    index: process.env.ES_INDEX,
+    index: process.env.ES_INDEX ?? '',
   },
 };

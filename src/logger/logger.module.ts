@@ -12,6 +12,7 @@ export default class LoggerModule {
         {
           defaultMeta: { service: config.service_name },
           format: winston.format.json(),
+          exitOnError: false,
           transports: [new ElasticTransport()],
         },
         opt,

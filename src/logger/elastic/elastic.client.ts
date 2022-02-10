@@ -2,6 +2,10 @@ import { config } from '../../config.js';
 import { ApiResponse, Client } from '@elastic/elasticsearch';
 import { TransportRequestPromise } from '@elastic/elasticsearch/lib/Transport';
 
+interface EsObject {
+  [key: string]: any;
+}
+
 export default class ElasticClient {
   private readonly client: Client;
 
@@ -17,15 +21,19 @@ export default class ElasticClient {
     });
   }
 
-  send(info: Object): TransportRequestPromise<ApiResponse> {
+  send(
+    data: EsObject,
+    idx = config.elastic.index,
+  ): TransportRequestPromise<ApiResponse> {
     const dt = new Date();
+
     return this.client.index({
-      index: config.elastic.index ?? '',
+      index: 'es_index' in data ? data.es_index : idx,
       refresh: true,
       body: {
         '@timestamp': dt.toISOString(),
         service: config.service_name,
-        ...info,
+        ...data,
       },
     });
   }

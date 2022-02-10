@@ -11,6 +11,7 @@ class LoggerModule {
         this.logger = winston_1.default.createLogger(Object.assign({}, {
             defaultMeta: { service: config_js_1.config.service_name },
             format: winston_1.default.format.json(),
+            exitOnError: false,
             transports: [new elastic_transport_js_1.ElasticTransport()],
         }, opt));
         this.logger.add(new winston_1.default.transports.Console({

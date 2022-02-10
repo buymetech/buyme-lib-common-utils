@@ -6,6 +6,6 @@ export declare const config: {
         username: string | undefined;
         password: string | undefined;
         cloud_id: string | undefined;
-        index: string | undefined;
+        index: string;
     };
 };
