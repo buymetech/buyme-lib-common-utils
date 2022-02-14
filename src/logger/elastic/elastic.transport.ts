@@ -40,33 +40,31 @@ export class ElasticTransport extends Transport {
   }
 
   setLogObjectMessage(result: object) {
-    const customMessage: any = CommonHelper.findValInObject(
-      this.date,
-      'message',
-    );
-    if (typeof customMessage !== 'undefined') {
-      Object.assign(result, { es_index: customMessage });
-    }
-
+    const message: any = CommonHelper.findValInObject(this.date, 'message');
+    const isString = message instanceof String || typeof message === 'string';
     if (
-      customMessage instanceof String ||
-      typeof customMessage === 'string' ||
-      typeof customMessage === 'number'
+      typeof message !== 'undefined' &&
+      (isString || typeof message === 'number')
     ) {
-      Object.assign(result, { message: customMessage });
+      Object.assign(result, { message: message });
     } else {
+      if (typeof message === 'object' && message !== null) {
+        Object.assign(this.date, message);
+      }
       Object.assign(result, { message: 'Message not found in log object' });
     }
   }
 
   setLogObjectBody(result: object) {
     if (typeof this.date === 'object') {
-      const customIndex: any = CommonHelper.findValInObject(
-        this.date,
-        'es_index',
-      );
-      if (typeof customIndex !== 'undefined') {
-        Object.assign(result, { es_index: customIndex });
+      const index: any = CommonHelper.findValInObject(this.date, 'es_index');
+      if (typeof index !== 'undefined') {
+        Object.assign(result, { es_index: index });
+      }
+
+      const level: any = CommonHelper.findValInObject(this.date, 'level');
+      if (typeof level !== 'undefined') {
+        Object.assign(result, { level: level });
       }
 
       try {

@@ -26,7 +26,6 @@ export default class ElasticClient {
     idx = config.elastic.index,
   ): TransportRequestPromise<ApiResponse> {
     const dt = new Date();
-
     return this.client.index({
       index: 'es_index' in logObject ? logObject.es_index : idx,
       refresh: true,

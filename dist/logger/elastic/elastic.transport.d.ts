@@ -5,6 +5,6 @@ export declare class ElasticTransport extends Transport {
     constructor(opts?: transportHelper.TransportStreamOptions);
     log(data: any, callback: () => void): void;
     getLogObject(): {};
-    setLogObjectMessage(result: object, data: any): void;
+    setLogObjectMessage(result: object): void;
     setLogObjectBody(result: object): void;
 }

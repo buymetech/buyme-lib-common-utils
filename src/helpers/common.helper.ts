@@ -1,10 +1,13 @@
 export class CommonHelper {
-  static findValInObject(object: any, key: string) {
+  static findValInObject(object: any, key: string, del = true) {
     let value;
 
     Object.keys(object).some(function (k) {
       if (k === key) {
         value = object[k];
+        if (del) {
+          delete object[k];
+        }
         return true;
       }
 

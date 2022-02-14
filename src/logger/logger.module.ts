@@ -1,4 +1,3 @@
-import { config } from '../config.js';
 import winston, * as winstonHelper from 'winston';
 import { ElasticTransport } from './elastic/elastic.transport.js';
 
@@ -10,7 +9,6 @@ export default class LoggerModule {
       Object.assign(
         {},
         {
-          defaultMeta: { service: config.service_name },
           format: winston.format.json(),
           exitOnError: false,
           transports: [new ElasticTransport()],

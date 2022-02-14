@@ -1,6 +1,6 @@
 {
   "name": "buyme-lib-common-utils",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Common utilities shared between Buyme's services",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

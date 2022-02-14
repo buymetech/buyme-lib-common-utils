@@ -28,28 +28,33 @@ class ElasticTransport extends winston_transport_1.default {
     }
     getLogObject() {
         const result = {};
-        this.setLogObjectMessage(result, this.date);
+        this.setLogObjectMessage(result);
         this.setLogObjectBody(result);
         return result;
     }
-    setLogObjectMessage(result, data) {
-        if (data instanceof String ||
-            typeof data === 'string' ||
-            typeof data === 'number') {
-            Object.assign(result, { message: data });
+    setLogObjectMessage(result) {
+        const message = common_helper_1.CommonHelper.findValInObject(this.date, 'message');
+        const isString = message instanceof String || typeof message === 'string';
+        if (typeof message !== 'undefined' &&
+            (isString || typeof message === 'number')) {
+            Object.assign(result, { message: message });
+        }
+        else {
+            if (typeof message === 'object' && message !== null) {
+                Object.assign(this.date, message);
+            }
+            Object.assign(result, { message: 'Message not found in log object' });
         }
     }
     setLogObjectBody(result) {
         if (typeof this.date === 'object') {
-            const customIndex = common_helper_1.CommonHelper.findValInObject(this.date, 'es_index');
-            if (typeof customIndex !== 'undefined') {
-                Object.assign(result, { es_index: customIndex });
+            const index = common_helper_1.CommonHelper.findValInObject(this.date, 'es_index');
+            if (typeof index !== 'undefined') {
+                Object.assign(result, { es_index: index });
             }
-            if (this.date.hasOwnProperty('message')) {
-                this.setLogObjectMessage(result, this.date.message);
-            }
-            else {
-                Object.assign(result, { message: 'Message not found in log object' });
+            const level = common_helper_1.CommonHelper.findValInObject(this.date, 'level');
+            if (typeof level !== 'undefined') {
+                Object.assign(result, { level: level });
             }
             try {
                 Object.assign(result, { ctx: JSON.stringify(this.date, null, 2) });
