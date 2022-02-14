@@ -1,16 +1,19 @@
 export class CommonHelper {
-  static flatten = (obj: any) => {
-    const result: any = {};
-    for (const i in obj) {
-      if (typeof obj[i] === 'object' && !Array.isArray(obj[i])) {
-        const temp = CommonHelper.flatten(obj[i]);
-        for (const j in temp) {
-          result[i + '.' + j] = temp[j];
-        }
-      } else {
-        result[i] = obj[i];
+  static findValInObject(object: any, key: string) {
+    let value;
+
+    Object.keys(object).some(function (k) {
+      if (k === key) {
+        value = object[k];
+        return true;
       }
-    }
-    return result;
-  };
+
+      if (object[k] && typeof object[k] === 'object') {
+        value = CommonHelper.findValInObject(object[k], key);
+        return value !== undefined;
+      }
+    });
+
+    return value;
+  }
 }

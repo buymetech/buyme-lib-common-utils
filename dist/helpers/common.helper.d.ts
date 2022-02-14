@@ -1,3 +1,3 @@
 export declare class CommonHelper {
-    static flatten: (obj: any) => any;
+    static findValInObject(object: any, key: string): undefined;
 }

@@ -2,20 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommonHelper = void 0;
 class CommonHelper {
+    static findValInObject(object, key) {
+        let value;
+        Object.keys(object).some(function (k) {
+            if (k === key) {
+                value = object[k];
+                return true;
+            }
+            if (object[k] && typeof object[k] === 'object') {
+                value = CommonHelper.findValInObject(object[k], key);
+                return value !== undefined;
+            }
+        });
+        return value;
+    }
 }
 exports.CommonHelper = CommonHelper;
-CommonHelper.flatten = (obj) => {
-    const result = {};
-    for (const i in obj) {
-        if (typeof obj[i] === 'object' && !Array.isArray(obj[i])) {
-            const temp = CommonHelper.flatten(obj[i]);
-            for (const j in temp) {
-                result[i + '.' + j] = temp[j];
-            }
-        }
-        else {
-            result[i] = obj[i];
-        }
-    }
-    return result;
-};

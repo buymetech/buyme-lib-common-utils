@@ -15,32 +15,49 @@ class ElasticTransport extends winston_transport_1.default {
         this.opts.format = (0, ecs_winston_format_1.default)();
     }
     log(data, callback) {
+        this.date = data;
         setImmediate(() => {
-            this.emit('logged', data);
+            this.emit('logged', this.date);
         });
-        const logObject = this.getLogObject(data);
+        const logObject = this.getLogObject();
         const client = new elastic_client_js_1.default();
-        client.send(logObject).catch((error) => {
-            console.error('Error while sending log to ES', error);
+        client.send(logObject).catch((e) => {
+            console.error('Error while sending log to ES', e);
         });
         callback();
     }
-    getLogObject(data) {
+    getLogObject() {
         const result = {};
+        this.setLogObjectMessage(result, this.date);
+        this.setLogObjectBody(result);
+        return result;
+    }
+    setLogObjectMessage(result, data) {
         if (data instanceof String ||
             typeof data === 'string' ||
             typeof data === 'number') {
-            Object.assign(result, { content: JSON.stringify(data) });
+            Object.assign(result, { message: data });
         }
-        else if (typeof data === 'object' && data !== null) {
-            if (data.hasOwnProperty('message') &&
-                data.message.hasOwnProperty('es_index')) {
-                Object.assign(result, { es_index: data.message.es_index });
-                delete data.message.es_index;
+    }
+    setLogObjectBody(result) {
+        if (typeof this.date === 'object') {
+            const customIndex = common_helper_1.CommonHelper.findValInObject(this.date, 'es_index');
+            if (typeof customIndex !== 'undefined') {
+                Object.assign(result, { es_index: customIndex });
             }
-            Object.assign(result, common_helper_1.CommonHelper.flatten(data));
+            if (this.date.hasOwnProperty('message')) {
+                this.setLogObjectMessage(result, this.date.message);
+            }
+            else {
+                Object.assign(result, { message: 'Message not found in log object' });
+            }
+            try {
+                Object.assign(result, { ctx: JSON.stringify(this.date, null, 2) });
+            }
+            catch (e) {
+                console.error('Error while stringify data for ES', e);
+            }
         }
-        return result;
     }
 }
 exports.ElasticTransport = ElasticTransport;
