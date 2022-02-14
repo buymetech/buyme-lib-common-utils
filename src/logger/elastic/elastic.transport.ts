@@ -33,37 +33,44 @@ export class ElasticTransport extends Transport {
 
   getLogObject() {
     const result = {};
-    this.setLogObjectMessage(result, this.date);
+    this.setLogObjectMessage(result);
     this.setLogObjectBody(result);
 
     return result;
   }
 
-  setLogObjectMessage(result: object, data: any) {
+  setLogObjectMessage(result: object) {
+    const customMessage: any = CommonHelper.findValInObject(
+      this.date,
+      'message',
+    );
+    if (typeof customMessage !== 'undefined') {
+      Object.assign(result, { es_index: customMessage });
+    }
+
     if (
-      data instanceof String ||
-      typeof data === 'string' ||
-      typeof data === 'number'
+      customMessage instanceof String ||
+      typeof customMessage === 'string' ||
+      typeof customMessage === 'number'
     ) {
-      Object.assign(result, { message: data });
+      Object.assign(result, { message: customMessage });
+    } else {
+      Object.assign(result, { message: 'Message not found in log object' });
     }
   }
 
   setLogObjectBody(result: object) {
     if (typeof this.date === 'object') {
-      const customIndex = CommonHelper.findValInObject(this.date, 'es_index');
+      const customIndex: any = CommonHelper.findValInObject(
+        this.date,
+        'es_index',
+      );
       if (typeof customIndex !== 'undefined') {
         Object.assign(result, { es_index: customIndex });
       }
 
-      if (this.date.hasOwnProperty('message')) {
-        this.setLogObjectMessage(result, this.date.message);
-      } else {
-        Object.assign(result, { message: 'Message not found in log object' });
-      }
-
       try {
-        Object.assign(result, { body: JSON.stringify(this.date, null, 2) });
+        Object.assign(result, { ctx: JSON.stringify(this.date, null, 2) });
       } catch (e) {
         console.error('Error while stringify data for ES', e);
       }
