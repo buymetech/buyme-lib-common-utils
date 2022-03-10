@@ -15,9 +15,9 @@ class ElasticTransport extends winston_transport_1.default {
         this.opts.format = (0, ecs_winston_format_1.default)();
     }
     log(data, callback) {
-        this.date = data;
+        this.data = data;
         setImmediate(() => {
-            this.emit('logged', this.date);
+            this.emit('logged', this.data);
         });
         const logObject = this.getLogObject();
         const client = new elastic_client_js_1.default();
@@ -33,7 +33,7 @@ class ElasticTransport extends winston_transport_1.default {
         return result;
     }
     setLogObjectMessage(result) {
-        const message = common_helper_1.CommonHelper.findValInObject(this.date, 'message');
+        const message = common_helper_1.CommonHelper.findValInObject(this.data, 'message');
         const isString = message instanceof String || typeof message === 'string';
         if (typeof message !== 'undefined' &&
             (isString || typeof message === 'number')) {
@@ -41,23 +41,24 @@ class ElasticTransport extends winston_transport_1.default {
         }
         else {
             if (typeof message === 'object' && message !== null) {
-                Object.assign(this.date, message);
+                Object.assign(this.data, message);
             }
             Object.assign(result, { message: 'Message not found in log object' });
         }
     }
     setLogObjectBody(result) {
-        if (typeof this.date === 'object') {
-            const index = common_helper_1.CommonHelper.findValInObject(this.date, 'es_index');
+        if (typeof this.data === 'object') {
+            const index = common_helper_1.CommonHelper.findValInObject(this.data, 'es_index');
             if (typeof index !== 'undefined') {
                 Object.assign(result, { es_index: index });
             }
-            const level = common_helper_1.CommonHelper.findValInObject(this.date, 'level');
+            const level = common_helper_1.CommonHelper.findValInObject(this.data, 'level');
             if (typeof level !== 'undefined') {
                 Object.assign(result, { level: level });
             }
             try {
-                Object.assign(result, { ctx: JSON.stringify(this.date, null, 2) });
+                common_helper_1.CommonHelper.deleteLargeProps(this.data);
+                Object.assign(result, { ctx: JSON.stringify(this.data, null, 2) });
             }
             catch (e) {
                 console.error('Error while stringify data for ES', e);

@@ -19,5 +19,17 @@ class CommonHelper {
         });
         return value;
     }
+    static deleteLargeProps(object) {
+        Object.keys(object).map(function (k) {
+            if (object[k] && typeof object[k] === 'object') {
+                CommonHelper.deleteLargeProps(object[k]);
+            }
+            else if (typeof object[k] === 'string') {
+                if (object[k].length > 2000) {
+                    delete object[k];
+                }
+            }
+        });
+    }
 }
 exports.CommonHelper = CommonHelper;
